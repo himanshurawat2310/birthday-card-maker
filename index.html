@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birthday Card Maker</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #fefefe;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #e91e63;
+    }
+    .controls {
+      max-width: 400px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input, select, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    .card-preview {
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px solid #ddd;
+      width: 300px;
+      text-align: center;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      color: white;
+      min-height: 200px;
+    }
+    .download-btn {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Birthday Card Maker 🎂</h1>
+  <div class="controls">
+    <input type="text" id="cardName" placeholder="Enter name or message">
+    <select id="template">
+      <option value="template1">🎈 Pink Balloons</option>
+      <option value="template2">🎂 Cake & Confetti</option>
+      <option value="template3">🌸 Floral Hindi</option>
+    </select>
+    <select id="fontStyle">
+      <option value="Segoe UI">Segoe UI</option>
+      <option value="Brush Script MT">Cursive</option>
+      <option value="Playfair Display">Bold Serif</option>
+      <option value="Noto Sans Devanagari">Hindi</option>
+    </select>
+    <input type="color" id="textColor" value="#ffffff">
+    <button class="download-btn" onclick="downloadCard()">Download Card</button>
+  </div>
+  <div id="preview" class="card-preview"></div>
+
+  <script>
+    const templates = {
+      template1: {
+        background: 'linear-gradient(#ff5f6d, #ffc371)',
+      },
+      template2: {
+        background: 'url(https://i.imgur.com/fk5E4Y8.jpg)',
+      },
+      template3: {
+        background: 'url(https://i.imgur.com/wI7G4Yv.jpg)',
+      }
+    };
+
+    const nameInput = document.getElementById('cardName');
+    const templateSelect = document.getElementById('template');
+    const fontSelect = document.getElementById('fontStyle');
+    const textColorInput = document.getElementById('textColor');
+    const preview = document.getElementById('preview');
+
+    function updatePreview() {
+      const template = templates[templateSelect.value];
+      const font = fontSelect.value;
+      const color = textColorInput.value;
+      const message = nameInput.value || 'Happy Birthday!';
+      preview.style.background = template.background;
+      preview.innerHTML = `<div style="font-size: 24px; font-family: '${font}'; color: ${color};">${message}</div>`;
+    }
+
+    nameInput.addEventListener('input', updatePreview);
+    templateSelect.addEventListener('change', updatePreview);
+    fontSelect.addEventListener('change', updatePreview);
+    textColorInput.addEventListener('input', updatePreview);
+    window.onload = updatePreview;
+
+    function downloadCard() {
+      html2canvas(preview).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'birthday-card.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
