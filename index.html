@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,12 +39,20 @@
       background-position: center;
       color: white;
       min-height: 200px;
+      position: relative;
     }
     .download-btn {
       background-color: #4caf50;
       color: white;
       border: none;
       cursor: pointer;
+    }
+    .confetti {
+      animation: confetti 1s ease-in-out infinite alternate;
+    }
+    @keyframes confetti {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(10px); }
     }
   </style>
 </head>
@@ -52,15 +61,16 @@
   <div class="controls">
     <input type="text" id="cardName" placeholder="Enter name or message">
     <select id="template">
-      <option value="template1">🎈 Pink Balloons</option>
-      <option value="template2">🎂 Cake & Confetti</option>
-      <option value="template3">🌸 Floral Hindi</option>
+      <option value="floral">🌸 Light Floral</option>
+      <option value="cake">🎂 Cake & Confetti</option>
+      <option value="night">🌌 Night Sky</option>
+      <option value="emoji">🎈 Cartoon & Emoji</option>
     </select>
     <select id="fontStyle">
       <option value="Segoe UI">Segoe UI</option>
       <option value="Brush Script MT">Cursive</option>
       <option value="Playfair Display">Bold Serif</option>
-      <option value="Noto Sans Devanagari">Hindi</option>
+      <option value="Noto Sans Devanagari">Devanagari (Hindi)</option>
     </select>
     <input type="color" id="textColor" value="#ffffff">
     <button class="download-btn" onclick="downloadCard()">Download Card</button>
@@ -69,14 +79,17 @@
 
   <script>
     const templates = {
-      template1: {
-        background: 'linear-gradient(#ff5f6d, #ffc371)',
+      floral: {
+        background: 'linear-gradient(#ffe5ec, #ffc2d1)'
       },
-      template2: {
-        background: 'url(https://i.imgur.com/fk5E4Y8.jpg)',
+      cake: {
+        background: 'url(https://i.imgur.com/fk5E4Y8.jpg)'
       },
-      template3: {
-        background: 'url(https://i.imgur.com/wI7G4Yv.jpg)',
+      night: {
+        background: 'url(https://i.imgur.com/3Jp6q72.jpg)'
+      },
+      emoji: {
+        background: 'linear-gradient(#ffecd2, #fcb69f)'
       }
     };
 
@@ -92,7 +105,7 @@
       const color = textColorInput.value;
       const message = nameInput.value || 'Happy Birthday!';
       preview.style.background = template.background;
-      preview.innerHTML = `<div style="font-size: 24px; font-family: '${font}'; color: ${color};">${message}</div>`;
+      preview.innerHTML = `<div style="font-size: 24px; font-family: '${font}'; color: ${color}; padding-top: 40px;">${message}</div>`;
     }
 
     nameInput.addEventListener('input', updatePreview);
